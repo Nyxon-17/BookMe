@@ -1,0 +1,41 @@
+<%layout('/layout/boilerplate.ejs')-%>
+
+    <body class="bg-light">
+
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <div>
+                    <div class="card">
+                        <div class="ratio ratio-16x9">
+                            <img src="<%= place.image %>" class="card-img-top object-fit-cover" alt="...">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"> ₹<%= place.price?.toLocaleString("en-IN") %>/Per Day</p>
+                            <h5 class="card-title"><b>
+                                    <%= place.title %>
+                                </b></h5>
+                            <p class="card-text">
+                                <%= place.description %>
+                            </p>
+                            <p class="card-text"><b><i>
+                                        <%= place.location %>
+                                    </i></b></p>
+                            <p class="card-text"><b><i>
+                                        <%= place.country %>
+                                    </i></b></p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <form action="/place/<%= place._id %>/edit" method="GET">
+                                <button type="submit" class="btn btn-primary">Edit</button>
+                            </form>
+                            <form action="/place/<%= place._id %>?_method=DELETE" method="POST">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    </html>

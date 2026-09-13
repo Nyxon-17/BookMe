@@ -1,0 +1,29 @@
+<% layout('/layout/boilerplate.ejs') -%>
+
+<body>
+    <h1>All Places</h1>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+        <% for(let place of places) { %>
+            <div class="col">
+                <a href="/places/<%= place._id %>" class="text-decoration-none text-dark">
+                    <div class="img-zoom-container">
+                        <div class="card">
+                            <img src="<%= place.image %>" class="card-img-top" alt="...">
+
+                            <div class="card-body">
+                                <h5 class="card-title"><b>
+                                        <%= place.title %>
+                                    </b></h5>
+                                <p class="card-text">
+                                    ₹<%= place.price?.toLocaleString("en-IN") %>/Per Day
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <% } %>
+    </div>
+</body>
+
+</html>

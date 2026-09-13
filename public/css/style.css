@@ -1,0 +1,20 @@
+.navbar{
+    background-color: white;
+}
+.nav-link{
+    color: black importent;
+}
+.card{
+    border: none !important;
+    margin-bottom: 2rem;
+}
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100%;
+    object-fit: cover !important;
+    height: 20rem;
+}
+.img-zoom-container :hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}

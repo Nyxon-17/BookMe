@@ -1,0 +1,84 @@
+<%layout( '/layout/boilerplate.ejs' )-%>
+
+    <body class="bg-light">
+
+        <form action="/places" method="POST" class="col col-8 offset-2 needs-validation" novalidate>
+            <h1>Add New Place</h1>
+            <div class="row">
+                <div class="mb-3">
+
+                    <label for="title" class="form-label">Enter Title</label>
+                    <input type="text" class="form-control" id="title" name="place[title]"
+                        placeholder="Enter place title" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a title.
+                    </div>
+                </div>
+                <div class="mb-3">
+
+                    <label for="imageUrl" class="form-label">Image Url</label>
+                    <input type="text" class="form-control" id="image" name="place[image]"
+                        placeholder="Enter place image">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose an image.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="place[description]" rows="10" cols="100"
+                        placeholder="Enter place description" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose description.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price ₹</label>
+                    <input type="number" class="form-control" id="price" name="place[price]"
+                        placeholder="Enter place price" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a Price.
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-8 ">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="place[location]"
+                            placeholder="Enter place location" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a location.
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-4">
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" class="form-control" id="country" name="place[country]"
+                            placeholder="Enter place country" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a country.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Place</button>
+
+        </form>
+    </body>
+
+    </html>

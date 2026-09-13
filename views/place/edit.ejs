@@ -1,0 +1,41 @@
+<%layout('/layout/boilerplate.ejs')-%>
+
+    <body>
+
+        <form action="/places/<%= place._id %>?_method=PUT" method="POST" class="col col-8 offset-2">
+            <h1>Update Place</h1>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Enter Title</label>
+                    <input type="text" class="form-control" id="title" name="place[title]"
+                        placeholder="Enter place title" value="<%= place.title %>">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="place[description]" rows="10" cols="100"
+                        placeholder="Enter place description"><%= place.description %></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="place[price]"
+                        placeholder="Enter place price" value="<%= place.price %>">
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-8 ">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="place[location]"
+                            placeholder="Enter place location" value="<%= place.location %>">
+                    </div>
+                    <div class="mb-3 col-md-4">
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" class="form-control" id="country" name="place[country]"
+                            placeholder="Enter place country" value="<%= place.country %>">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Place</button>
+
+        </form>
+    </body>
+
+    </html>
