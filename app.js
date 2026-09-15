@@ -7,6 +7,8 @@ const methodOverride = require('method-override')
 const ejsMate = require('ejs-mate');
 const wrapAsync = require("./utils/wrapAsync")
 const placeSchema = require("./schima.js")
+const reviewSchema = require("./models/review");
+const Review = require("./models/review");
 
 //mongo URI
 const MONGO_URI = 'mongodb://127.0.0.1:27017/bookme'
@@ -50,13 +52,19 @@ app.get("/place", async (req, res) => {
 })
 
 app.get("/places/:id", wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    let place = await Place.findById(id);
-    res.render("place/show", { place })
-
-})
-)
-app.post("/places", async (req, res,next) => {
+    const { id } = req.params;
+    
+    // Chain .populate() to exchange review IDs for actual review objects
+    const place = await Place.findById(id).populate("reviews");
+    
+    if (!place) {
+        return res.status(404).send("Place not found");
+    }
+    
+    // Pass only the 'place' object to the view, which now includes place.reviews
+    res.render("place/show.ejs", { place });
+}));
+app.post("/places", async (req, res, next) => {
     try {
         let place = new Place(req.body.place);
         await place.save();
@@ -87,17 +95,37 @@ app.delete("/place/:id", async (req, res) => {
     await Place.findByIdAndDelete(id);
     res.redirect("/place")
 })
-app.get("/", (req, res) => {
-    res.send("API running.......")
-})
 
-app.all("*any", (req, res, next) => {
-    res.status(404).send("page not found")
-})
-app.use((err, req, res, next) => {
-    res.send("Internal Server Error")
-})
+app.post("/places/:id/reviews", wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    const place = await Place.findById(id);
+    
+    if (!place) {
+        return res.status(404).send("Place not found");
+    }
 
-app.listen(port, () => {
-    console.log(`server running on port ${port}`)
-})
+    const newReview = new Review(req.body.review);
+    
+    // 1. Push the new review object into the place's reviews array
+    place.reviews.push(newReview);
+    
+    // 2. Save both database documents
+    await newReview.save();
+    await place.save();
+    
+    res.redirect(`/places/${id}`);
+}));
+    app.get("/", (req, res) => {
+        res.send("API running.......")
+    })
+
+    app.all("*any", (req, res, next) => {
+        res.status(404).send("page not found")
+    })
+    app.use((err, req, res, next) => {
+        res.send("Internal Server Error")
+    })
+
+    app.listen(port, () => {
+        console.log(`server running on port ${port}`)
+    })

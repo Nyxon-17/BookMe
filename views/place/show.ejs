@@ -32,7 +32,22 @@
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
+                       
                     </div>
+                     <form action="/place/<%= place._id %>/reviews%>" method="POST"></form>
+                            <h1>Rating</h1>
+                            <label for="rating">Rate</label>
+                            <input type="range" name="review[rating]" id="rating" min="1" max="5" required>
+                            <label for="comment">Comment</label>
+                            <textarea name="review[comment]" id="comment" required></textarea>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+
+                        <div class="card mt-3">
+                            <h1> Customer Reviews</h1>
+                            <h1><%= review.rating %></h1>
+                            <p><%= review.comment %></p>
+                        </div>
                 </div>
             </div>
         </div>
