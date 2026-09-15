@@ -35,50 +35,94 @@
                         </div>
                     </div>
 
-                    <!-- Leave a Review Form -->
-                    <div class="card mt-3 p-3">
-                        <h3>Leave a Review</h3>
-                        <!-- FIXED: Corrected the closing EJS tag from %> to -%> or %> and removed the stray extra form tag -->
-                        <form action="/place/<%= place._id %>/reviews" method="POST">
-                            <div class="mb-3">
-                                <label for="rating" class="form-label">Rating</label>
-                                <input type="range" name="review[rating]" id="rating" min="1" max="5" class="form-range"
-                                    required>
+
+                    <div class="container">
+                        <form action="/place/<%= place._id %>/reviews" method="POST" class="col col-8 offset-2 needs-validation" novalidate>
+                            <div class="rating-container text-center">
+                                <div class="rating-emoji">
+                                    😀 😊 😐 🫩 😒
+                                </div>
+                                <h3 class="rating-title">How was your experience?</h3>
+                                <div class="star-rating">
+                                    <input type="radio" id="star5" name="review[rating]" value="5">
+                                    <label for="star5" class="fas fa-star"></label>
+                                    <input type="radio" id="star4" name="review[rating]" value="4">
+                                    <label for="star4" class="fas fa-star"></label>
+                                    <input type="radio" id="star3" name="review[rating]" value="3">
+                                    <label for="star3" class="fas fa-star"></label>
+                                    <input type="radio" id="star2" name="review[rating]" value="2">
+                                    <label for="star2" class="fas fa-star"></label>
+                                    <input type="radio" id="star1" name="review[rating]" value="1" required>
+                                     
+                                    <label for="star1" class="fas fa-star"></label>
+                                    <div class="invalid-feedback">
+                                        please rate your experience
+                                    </div>
+                                </div>
+                                <div class="rating-feedback">
+                                    <textarea class="form-control" rows="3" placeholder="Tell us about your experience"
+                                        name="review[comment]" required></textarea>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                         <div class="invalid-feedback">
+                                            please give us your feedback
+                                        </div>
+                                </div>
+                                <button class="submit-rating">Submit Rating</button>
+
                             </div>
-                            <div class="mb-3">
-                                <label for="comment" class="form-label">Comment</label>
-                                <textarea name="review[comment]" id="comment" class="form-control" rows="3"
-                                    required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
 
                     <% if (place.reviews && place.reviews.length> 0) { %>
-                        <div class="mt-3">
-                            <h3>Customer Reviews</h3>
-                            <% for (let review of place.reviews) { %>
-                                <div class="card mb-2">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Rating: <%= review.rating %> / 5</h5>
-                                        <p class="card-text">
-                                            <%= review.comment %>
-                                        </p>
+                        <div class="container mt-5">
+                            <h2 class="text-center mb-5">What Our Clients Say</h2>
+
+                            <div class="row g-4 justify-content-center">
+                                <% for (let review of place.reviews) { %>
+                                    <div class="col-md-4 d-flex">
+                                        <div class="card w-100 shadow-sm border-0 bg-light">
+                                            <div
+                                                class="card-body text-center d-flex flex-column justify-content-between p-4">
+
+
+                                                <p class="card-text italic text-muted flex-grow-1">
+                                                    "<%= review.comment %>"
+                                                </p>
+                                                <div class="mt-3">
+                                                    <h6 class="card-title fw-bold mb-2">Rating: <%= review.rating %>
+                                                            <span style="color: rgb(236, 160, 21);"><i
+                                                                    class="bi bi-star-fill "></i></span>
+                                                    </h6>
+                                                    <div class="text-warning fs-5">
+                                                        <%
+                                                        let rating=review.rating; 
+                                                        let fullStars=rating
+                                                        let emptyStars = 5 - fullStars
+                                                        %>
+
+
+                                                            <% for(let i=0; i < fullStars; i++) { %>
+                                                                <i class="bi bi-star-fill"></i>
+                                                            <% } %>
+
+                                                            <% for(let i = 0; i < emptyStars; i++) { %>
+                                                                <i class="bi bi-star"></i>
+                                                            <% } %>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <% } %>
+                                    <% } %>
+                            </div>
                         </div>
                         <% } %>
 
+
                 </div>
-                <form action="" class="form-control">
-                    <h1>reviews</h1>
-                    <label for="rating">Rating</label>
-                    <input type="range" name="rating" id="rating" min="1" max="5">
-                    <label for="comment">Comment</label>
-                    <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
             </div>
         </div>
     </body>

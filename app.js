@@ -92,45 +92,30 @@ app.delete("/place/:id", async (req, res) => {
     res.redirect("/place")
 })
 
-
-app.post("/place/:id/review", async (req, res) => {
-    let { id } = req.params;
-    let place = await Place.findById(id);
-    let review = new Review(req.body.review)
-    review.push(review)
-    await place.save()
-    res.redirect(`/place/${id}`)
-})
 app.get("/", (req, res) => {
     res.send("API running.......")
 })
 
-app.post("/places/:id/reviews", wrapAsync(async (req, res) => {
+app.post("/place/:id/reviews", wrapAsync(async (req, res) => {
     const { id } = req.params;
     const place = await Place.findById(id);
-    if (!place) {
-        return res.status(404).send("Place not found");
-    }
-    
-    const newReview = new Review(req.body.review);
-    place.reviews.push(newReview);
-    
+    let newReview = new Review(req.body.review);
     await newReview.save();
+    place.reviews.push(newReview);
     await place.save();
-    
     res.redirect(`/places/${id}`);
 }));
-    app.get("/", (req, res) => {
-        res.send("API running.......")
-    })
+app.get("/", (req, res) => {
+    res.send("API running.......")
+})
 
-    app.all("*any", (req, res, next) => {
-        res.status(404).send("page not found")
-    })
-    // app.use((err, req, res, next) => {
-    //     res.send("Internal Server Error")
-    // })
+app.all("*any", (req, res, next) => {
+    res.status(404).send("page not found")
+})
+app.use((err, req, res, next) => {
+    res.send("Internal Server Error")
+})
 
-    app.listen(port, () => {
-        console.log(`server running on port ${port}`)
-    })
+app.listen(port, () => {
+    console.log(`server running on port ${port}`)
+})
