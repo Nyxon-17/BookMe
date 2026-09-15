@@ -53,17 +53,13 @@ app.get("/place", async (req, res) => {
 
 app.get("/places/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
-    
-    // Chain .populate() to exchange review IDs for actual review objects
     const place = await Place.findById(id).populate("reviews");
-    
     if (!place) {
         return res.status(404).send("Place not found");
     }
-    
-    // Pass only the 'place' object to the view, which now includes place.reviews
     res.render("place/show.ejs", { place });
 }));
+
 app.post("/places", async (req, res, next) => {
     try {
         let place = new Place(req.body.place);
@@ -99,17 +95,13 @@ app.delete("/place/:id", async (req, res) => {
 app.post("/places/:id/reviews", wrapAsync(async (req, res) => {
     const { id } = req.params;
     const place = await Place.findById(id);
-    
     if (!place) {
         return res.status(404).send("Place not found");
     }
-
-    const newReview = new Review(req.body.review);
     
-    // 1. Push the new review object into the place's reviews array
+    const newReview = new Review(req.body.review);
     place.reviews.push(newReview);
     
-    // 2. Save both database documents
     await newReview.save();
     await place.save();
     
@@ -122,9 +114,9 @@ app.post("/places/:id/reviews", wrapAsync(async (req, res) => {
     app.all("*any", (req, res, next) => {
         res.status(404).send("page not found")
     })
-    app.use((err, req, res, next) => {
-        res.send("Internal Server Error")
-    })
+    // app.use((err, req, res, next) => {
+    //     res.send("Internal Server Error")
+    // })
 
     app.listen(port, () => {
         console.log(`server running on port ${port}`)
